@@ -8,6 +8,7 @@ services:
     environment:
       NODE_ENV: development
       JWT_SECRET: secret
+      MONGO_URL: mongodb://root:rootpassword@mongodb:27017
     volumes:
       - ./express:/usr/src/app
     ports:

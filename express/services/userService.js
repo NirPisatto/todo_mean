@@ -5,7 +5,6 @@ const sha256 = require('sha256')
 
 
 module.exports ={
-
     profile : async(req, res) => {
         let u = await User.findOne({_id : req.user.userId})
         res.apiSuccess(u)

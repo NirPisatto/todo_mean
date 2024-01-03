@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-	return res.json({d : "Working User API"});
+	return res.json({d : "Pong with user API"});
 });
 
 

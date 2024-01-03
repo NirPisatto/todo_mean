@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
+var Task = require('./Task')
 var Schema = mongoose.Schema;
 
 var newSchema = new Schema({
   'name': { type: String, default : "" },
   'emailId': { type: String, default : "" },
   'password': { type: String, default : "" },
+  'tasks': [Task.schema],
   'createdAt': { type: Date, default: Date.now },
   'updatedAt': { type: Date, default: Date.now }
 });
@@ -21,7 +23,5 @@ newSchema.pre('update', function() {
 newSchema.pre('findOneAndUpdate', function() {
   this.update({}, { $set: { updatedAt: Date.now() } });
 });
-
-
 
 module.exports = mongoose.model('User', newSchema);
