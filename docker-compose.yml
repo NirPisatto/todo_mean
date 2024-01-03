@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  express:
+    image: node:latest
+    build:
+      context: ./express
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+      JWT_SECRET: secret
+    volumes:
+      - ./express:/usr/src/app
+    ports:
+      - 8080:8080
+    networks:
+      - default
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb_data_container:/data/db
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
