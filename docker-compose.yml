@@ -27,19 +27,19 @@ services:
       - mongodb_data_container:/data/db
     networks:
       - default
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    environment:
-      NODE_ENV: development
-    volumes:
-      - ./frontend/src:/usr/src/app/src
-    ports:
-      - 3000:3000
-    networks:
-      - default
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     NODE_ENV: development
+  #   volumes:
+  #     - ./frontend/src:/usr/src/app/src
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - default
   nginx:
     container_name: nginx
     build:
