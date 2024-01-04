@@ -28,7 +28,7 @@ if (dev) {
   require("dotenv").config();
 
   //disabling all console.logs in prod environment
-  console.log = function () {};
+  console.log = function () { };
 
   // Allow api call only from trusted website on production, in this case it will be your app server(react/ angular) url
   // var whitelist = ['https://google.com']

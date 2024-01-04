@@ -21,8 +21,17 @@
     "module": "ES2022",
     "paths": {
       "@pages/*": [
-        "src/app/pages/*"
-      ],  
+        "./app/pages/*"
+      ],
+      "@state/*": [
+        "./app/state/*"
+      ],
+      "@lib/*": [
+        "./app/lib/*"
+      ],
+      "@interfaces/*": [
+        "./app/lib/interfaces/*"
+      ],
     },
     "useDefineForClassFields": false,
     "lib": [

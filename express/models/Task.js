@@ -3,9 +3,9 @@ var Schema = mongoose.Schema;
 
 
 var newSchema = new Schema({
-  'name': { type: String, default : `Task-${Date.now}` },
-  'status': { type: String, default : "pending" },
-  'description': { type: String, default : "" },
+  'name': { type: String, default: `Task-${Date.now}` },
+  'status': { type: String, default: "pending" },
+  'description': { type: String, default: "" },
   'deadline': { type: Date },
   'createdAt': { type: Date, default: Date.now },
   'updatedAt': { type: Date, default: Date.now }

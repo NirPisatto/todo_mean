@@ -3,24 +3,24 @@ var Task = require('./Task')
 var Schema = mongoose.Schema;
 
 var newSchema = new Schema({
-  'name': { type: String, default : "" },
-  'emailId': { type: String, default : "" },
-  'password': { type: String, default : "" },
+  'name': { type: String, default: "" },
+  'emailId': { type: String, default: "" },
+  'password': { type: String, default: "" },
   'tasks': [Task.schema],
   'createdAt': { type: Date, default: Date.now },
   'updatedAt': { type: Date, default: Date.now }
 });
 
-newSchema.pre('save', function(next){
+newSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 
-newSchema.pre('update', function() {
+newSchema.pre('update', function () {
   this.update({}, { $set: { updatedAt: Date.now() } });
 });
 
-newSchema.pre('findOneAndUpdate', function() {
+newSchema.pre('findOneAndUpdate', function () {
   this.update({}, { $set: { updatedAt: Date.now() } });
 });
 

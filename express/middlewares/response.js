@@ -1,10 +1,10 @@
-module.exports = function(opts){
-	if(!opts){
+module.exports = function (opts) {
+	if (!opts) {
 		opts = {};
 	}
 
 	var failCodes = opts['failCodes'];
-	if(!failCodes || !(failCodes instanceof Array)){
+	if (!failCodes || !(failCodes instanceof Array)) {
 		failCodes = [
 			400,
 			401,
@@ -14,53 +14,53 @@ module.exports = function(opts){
 	}
 
 	var statusCodeKey = opts['statusCodeKey'];
-	if(!statusCodeKey || typeof statusCodeKey !== 'string'){
+	if (!statusCodeKey || typeof statusCodeKey !== 'string') {
 		statusCodeKey = "statusCode";
 	}
 
 	var errorProps = opts['errorProps'];
-	if(!errorProps || errorProps === null || typeof errorProps !== 'object'){
+	if (!errorProps || errorProps === null || typeof errorProps !== 'object') {
 		errorProps = {
 			message: "An unknown error occurred"
 		}
 	}
 
-	return function(req,res,next){
+	return function (req, res, next) {
 
-		res.apiSuccess = function(response){
+		res.apiSuccess = function (response) {
 			res.status(200);
 			res.json({
 				success: true,
-				payload:response
+				payload: response
 			})
 		};
 
-		res.apiError = function(response){
+		res.apiError = function (response) {
 			res.status(200);
 			res.json({
 				success: false,
-				message:response
+				message: response
 			})
 		};
 
-		res.apiInternalError = function(err){
+		res.apiInternalError = function (err) {
 
 			var response = {};
 
 			var validErr = err instanceof Error;
 
-			for(var key in errorProps) {
-				if(validErr && err.hasOwnProperty(key)) {
+			for (var key in errorProps) {
+				if (validErr && err.hasOwnProperty(key)) {
 					response[key] = err[key];
-				}else if(errorProps.hasOwnProperty(key)) {
+				} else if (errorProps.hasOwnProperty(key)) {
 					response[key] = errorProps[key];
-				}else{
+				} else {
 					response[key] = null;
 				}
 			}
 
 			var statusCode = 500;
-			if(validErr && err.hasOwnProperty(statusCodeKey) && typeof err[statusCodeKey] === "number"){
+			if (validErr && err.hasOwnProperty(statusCodeKey) && typeof err[statusCodeKey] === "number") {
 				statusCode = err[statusCodeKey];
 			}
 
