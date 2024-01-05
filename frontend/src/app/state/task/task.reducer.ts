@@ -3,6 +3,7 @@ import {
     addTask,
     removeTask,
     loadTasks,
+    editTask,
     loadTodosSuccess,
     loadTodosFailure,
     setStatus
@@ -32,6 +33,15 @@ export const taskReducer = createReducer(
             tasks: [...state.tasks, { ...task }]
         })
     ),
+    on(editTask, (state, { task }) => {
+        const index = state.tasks.findIndex((t) => t._id === task._id);
+        const tasks = [...state.tasks];
+        tasks[index] = task;
+        return {
+            ...state,
+            tasks: tasks
+        }
+    }),
     // Remove the todo from the todos array
     on(removeTask, (state, { task }) => ({
         ...state,

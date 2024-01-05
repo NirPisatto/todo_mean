@@ -1,1 +1,39 @@
-<p>form works!</p>
+<div class="p-2">
+
+    <h2>{{formTitle}}</h2>
+    <p>
+        Input your task name and description
+    </p>
+
+    <form [formGroup]="taskFormGroup" class="example-form flex flex-col" (ngSubmit)="onSubmit()">
+        <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input [formControl]="taskFormGroup.controls.name" matInput size="small" placeholder=" Name"
+                value="Today task">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Description</mat-label>
+            <textarea [formControl]="taskFormGroup.controls.description" matInput placeholder="Description"></textarea>
+        </mat-form-field>
+        <div *ngIf="type=='edit'">
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <select [formControl]=" taskFormGroup.controls.status" matNativeControl required>
+                    <option value="new">New</option>
+                    <option value="pending">Pending</option>
+                    <option value="done">Done</option>
+                </select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="flex items-center justify-between">
+            <button
+                class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                {{buttonTitle}}
+            </button>
+        </div>
+    </form>
+</div>

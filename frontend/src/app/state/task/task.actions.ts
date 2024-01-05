@@ -11,6 +11,11 @@ export const removeTask = createAction(
     props<{ task: Task }>()
 );
 
+export const editTask = createAction(
+    '[Todo Page] Edit Todo',
+    props<{ task: Task }>()
+);
+
 export const loadTasks = createAction('[Todo Page] Load Todos', props<{ tasks: Task[] }>());
 
 export const loadTodosSuccess = createAction(

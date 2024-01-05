@@ -1,54 +1,90 @@
-<h1 class="py-4 text-ls text-gray-700 uppercase font-bold">
-    All Tasks
-</h1>
+<h1>Todo tasks</h1>
 
 <div class=" relative overflow-x-auto">
 
-    <button (click)="handleAddTask()">Add</button>
+    <div class="inline-flex rounded-md shadow-sm" role="group">
+        <button *ngIf="currentAction!='list'" (click)="toggleActionTo('list')" type="button"
+            class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 dark:focus:text-white">
+            Back
+        </button>
+        <button *ngIf="currentAction=='list'" (click)="toggleActionTo('create')" type="button"
+            class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 dark:focus:text-white">
+            Create
+        </button>
+    </div>
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-3 py-3">
-                    ID
-                </th>
-                <th scope="col" class="px-3 py-3">
-                    Title
-                </th>
-                <th scope="col" class="px-3 py-3">
-                    Description
-                </th>
-                <th scope="col" class="px-3 py-3">
-                    Status
-                </th>
-                <th scope="col" class="px-3 py-3">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                *ngFor="let task of (allTasks$ | async) as tasks; let i = index">
-                <td class="px-3 py-3">{{ i + 1 }}</td>
-                <td class="px-3 py-3">{{ task.name }}</td>
-                <td class="px-3 py-3">{{ task.description }}</td>
-                <td class="px-3 py-3">{{ task.status }}</td>
-                <td class="px-3 py-3 flex justify-center w-12">
-                    <button (click)="handleDeleteTask(task)">
-                        <span class="material-icons md-48 text-red-700">delete</span>
-                    </button>
+    <div *ngIf="currentAction == 'edit'" id="task-edit">
+        <task-form type="edit" [handleOnSubmit]="handleEditTask" [preTask]="selectedTask"
+            (onToggleAction)="toggleTo($event)">
+        </task-form>
+    </div>
 
-                    <button>
-                        <span class="material-icons md-48 text-yellow-500">edit</span>
-                    </button>
-                </td>
-            </tr>
+    <div *ngIf="currentAction == 'create'" id="task-create">
+        <task-form type="create" [handleOnSubmit]="handleAddTask" (onToggleAction)="toggleTo($event)">
+        </task-form>
+    </div>
 
-            <tr *ngIf="!(allTasks$ | async)?.length">
-                <td colspan="2" class="p-2">
-                    No tasks found
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div *ngIf="currentAction=='list'" class="p-2">
+        <h2>List of Task</h2>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-3 py-3">
+                        ID
+                    </th>
+                    <th scope="col" class="px-3 py-3">
+                        Title
+                    </th>
+                    <th scope="col" class="px-3 py-3">
+                        Description
+                    </th>
+                    <th scope="col" class="px-3 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-3 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    *ngFor="let task of (allTasks$ | async) as tasks; let i = index">
+                    <td class="px-3 py-3">{{ i + 1 }}</td>
+                    <td class="px-3 py-3">{{ task.name }}</td>
+                    <td class="px-3 py-3">{{ task.description }}</td>
+                    <td class="px-3 py-3">
+
+
+                        <span *ngIf="task.status == 'new'"
+                            class="capitalize font-bold bg-blue-100 text-blue-800 text-sm me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">
+                            New
+                        </span>
+                        <span *ngIf="task.status == 'done'"
+                            class="bg-green-100 text-green-800 text-sm capitalize font-bold me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Done</span>
+                        <span *ngIf="task.status == 'pending'"
+                            class="bg-yellow-100 text-yellow-800 text-sm capitalize font-bold me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending</span>
+
+                    </td>
+                    <td class="px-3 py-3 flex justify-center w-12">
+                        <button (click)="handleDeleteTask(task)">
+                            <span class="material-icons md-48 text-red-700">delete</span>
+                        </button>
+
+                        <button (click)="handleSetupEditForm(task)">
+                            <span class="material-icons md-48 text-yellow-500">edit</span>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr *ngIf="!(allTasks$ | async)?.length">
+                    <td colspan="2" class="p-2">
+                        No tasks found
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
 </div>

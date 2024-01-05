@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@state/app.state';
 import { Task } from '@lib/interfaces/task.interface';
-import { addTask, removeTask } from '@state/task/task.actions';
+import { addTask, removeTask, editTask } from '@state/task/task.actions';
 
 interface BaseResponse {
   // ... (other properties)
@@ -48,8 +48,19 @@ export class TaskService {
 
   deleteTask(task: Task): void {
     const url = `${this.apiUrl}/tasks`;
-    this.http.delete(url, { headers: this.headers, body: task }).subscribe((data) => {
-      this.store.dispatch(removeTask({ task: task }));
+    this.http.delete<BaseResponse>(url, { headers: this.headers, body: task }).subscribe((data) => {
+      if (data.success) {
+        this.store.dispatch(removeTask({ task: task }));
+      }
+    });
+  }
+
+  updateTask(task: Task): void {
+    const url = `${this.apiUrl}/tasks`;
+    this.http.put<BaseResponse>(url, task, { headers: this.headers }).subscribe((data) => {
+      if (data.success) {
+        this.store.dispatch(editTask({ task: task }));
+      }
     });
   }
 }

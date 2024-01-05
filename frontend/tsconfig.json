@@ -32,6 +32,9 @@
       "@interfaces/*": [
         "./app/lib/interfaces/*"
       ],
+      "@components/*": [
+        "./app/lib/components/*"
+      ],
     },
     "useDefineForClassFields": false,
     "lib": [
