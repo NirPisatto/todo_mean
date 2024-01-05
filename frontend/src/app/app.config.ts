@@ -6,8 +6,9 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideStore } from '@ngrx/store';
 
 import { taskReducer } from '@state/task/task.reducer';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration(), provideStore({ tasks: taskReducer })]
+  providers: [provideRouter(routes), provideClientHydration(), provideStore({ tasks: taskReducer }), provideAnimations()]
 };

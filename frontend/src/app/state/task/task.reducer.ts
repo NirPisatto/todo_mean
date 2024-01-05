@@ -1,10 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import {
     addTask,
-    removeTodo,
+    removeTask,
     loadTasks,
     loadTodosSuccess,
     loadTodosFailure,
+    setStatus
 } from './task.actions';
 
 import { Task } from '@interfaces/task.interface';
@@ -32,12 +33,12 @@ export const taskReducer = createReducer(
         })
     ),
     // Remove the todo from the todos array
-    on(removeTodo, (state, { id }) => ({
+    on(removeTask, (state, { task }) => ({
         ...state,
-        // todos: state.todos.filter((todo) => todo.id !== id),
+        tasks: state.tasks.filter((t) => t._id !== task._id),
     })),
     // Trigger loading the todos
-    on(loadTasks, (state) => ({ ...state, status: 'loading' })),
+    on(loadTasks, (state, { tasks }) => ({ ...state, tasks: tasks })),
     // Handle successfully loaded todos
     on(loadTodosSuccess, (state, { todos }) => ({
         ...state,
@@ -48,7 +49,7 @@ export const taskReducer = createReducer(
     // Handle todos load failure
     on(loadTodosFailure, (state, { error }) => ({
         ...state,
-        error: error,
         // status: 'error',
-    }))
+    })),
+    on(setStatus, (state, { status }) => ({ ...state, status: status }))
 );

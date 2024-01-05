@@ -6,12 +6,12 @@ export const addTask = createAction(
     props<{ task: Task }>()
 );
 
-export const removeTodo = createAction(
+export const removeTask = createAction(
     '[Todo Page] Remove Todo',
-    props<{ id: string }>()
+    props<{ task: Task }>()
 );
 
-export const loadTasks = createAction('[Todo Page] Load Todos');
+export const loadTasks = createAction('[Todo Page] Load Todos', props<{ tasks: Task[] }>());
 
 export const loadTodosSuccess = createAction(
     '[Todo API] Todo Load Success',
@@ -20,5 +20,8 @@ export const loadTodosSuccess = createAction(
 
 export const loadTodosFailure = createAction(
     '[Todo API] Todo Load Failure',
-    props<{ error: string }>()
+    props<{ error: String }>()
 );
+
+export const setStatus = createAction('[Todo API] Set status',
+    props<{ status: string }>());
